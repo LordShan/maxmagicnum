@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Text Processing</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Text Processing</h1>
+    <label for="text">Enter text:</label>
+    <input type="text" id="text" name="text">
+    <div>
+        <button class id="process-btnUP">Process</button>
+        <button id="process-btnDN">Process</button>
+        <button id="process-btnEQ">Process</button>
+    </div>
+    <div id="result"></div>
+    <script>
+        $(document).ready(function () {
+            $('#process-btn').click(function () {
+                var text = $('#text').val();
+                $.ajax({
+                    url: '/process_text',
+                    type: 'POST',
+                    data: { 'text': text },
+                    success: function (response) {
+                        $('#result').html(response.result);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

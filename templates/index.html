@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Magic number by Max</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    body {
+        height: 100vh;
+        margin: 0;
+        background-image: url('./static/background_number.png'); ; /* Путь к изображению */
+        background-size: cover;
+    }
+    input  {
+        font-size: 20px ;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+    }
+    label{
+        font-size: 20px ;
+
+    }
+    .main_div{
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        text-align:center;
+        background-color: rgba(255, 255, 255, 0.5);
+        position: fixed;
+        width: 500px;
+        height: 500px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .headpage{
+        color: #44a02d;
+        font-family: sans-serif;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .bntFunc {
+        width: 200px;
+        height: 75px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
+        border-color: #3361b6;
+    }
+
+    .hidden-button{
+        display: none;
+        width: 150px;
+        height: 50px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
+        border-color: #6ddf0f;
+    }
+
+    .result {
+        overflow: hidden;
+        /*white-space: nowrap;  для запрета переноса строк */
+        word-wrap: break-word; /* для автоматического переноса слов */
+        color: #44a02d;}
+</style>
+<body onload="document.getElementById('text').focus();">
+    <div class = "main_div">
+        <h1>Magic number from 1 to 100</h1>
+        <h1 class="result" id="result">Attempts Number: {{ attempt }}</h1>
+        <br>
+        <br>
+        <br>
+        <label for="text">Enter your number:</label>
+        <br>
+        <input type="number" id="text" name="text">
+        <br>
+        <br>
+        <br>
+        <button class="bntFunc" id="process-btn" onclick="focusInput()">Process</button>
+        <div class ="result" id="result"></div>
+        <br>
+        <br>
+        <br>
+        <button class="hidden-button" id="process-btn">Try again</button>
+    </div>
+    <script>
+        
+        function focusInput() {
+			document.getElementById('text').focus();
+            document.getElementById('text').select();
+		}
+
+        $(document).ready(function() {
+            $('#process-btn').click(function() {
+                var text = $('#text').val();
+                $.ajax({
+                    url: '/process_text',
+                    type: 'POST',
+                    data: {'text': text},
+                    success: function(response) {
+                        $('#result').html(response.result);
+                        
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
