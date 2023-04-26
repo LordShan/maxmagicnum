@@ -1,119 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Magic number by Max. Main</title>
     <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
-<style>/* наведение красоты*/
-    body {
-        
-        height: 100vh;
-        margin: 0;
-        background-image: url('./static/background_number.png'); ; /* Путь к изображению */
-        background-size: cover;
-    }
-    input  {
-        font-family: sans-serif;
-        font-size: 20px ;
-        border-radius: 5px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-    input:hover{
-        background-color: #c4db99;
-    }
-    label{
-        font-size: 20px ;
-
-    }
-    .main_div{
-        
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        text-align:center;
-        background-color: rgba(255, 255, 255, 0.5);
-        position: fixed;
-        width: 500px;
-        height: 500px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .headpage{
-        color: #44a02d;
-        font-family: sans-serif;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
+<style>
     
-    .bntFunc {
-        font-size: 20px;
-        width: 200px;
-        height: 75px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        border-radius: 5px;
-        border-color: #3361b6;
-    }
-    .bntFunc:hover{
-        border-color: #cacc58;
-        background-color: #c4db99;
-    }
-
-    .result {
-        overflow: hidden;
-        /*white-space: nowrap;  для запрета переноса строк */
-        word-wrap: break-word; /* для автоматического переноса слов */
-        color: #44a02d;}
 </style>
-<body onload="document.getElementById('text').focus(); document.getElementById('text').value = '';" >
-    <div class = "main_div">
-        <h1>Magic number from 1 to 100</h1>
-        <h1 class="result" id="result">Attempts Number: {{ attempt }}</h1>
-        <br>
-        <br>
-        <br>
-        <label for="text">Enter your number:</label>
-        <br>
-        <input type="number" id="text" name="text" onkeydown="handleKeyDown(event)">
-        <br>
-        <br>
-        <br>
-        <button class="bntFunc" id="process-btn" onclick="focusInput()">Process</button>
-        <div class ="result" id="result"></div>
-        <br>
-        <br>
-        <br>
-    </div>
-    <script>
-        /* устанавливает фокус на строке ввода и выделяет строку, не нужно удалять пред-ший результат*/
-        function focusInput() {
-			document.getElementById('text').focus();
-            document.getElementById('text').select();
-		}
-        /* вместо клика на кнопку можно нажать Enter */
-        function handleKeyDown(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                document.getElementById("process-btn").click();
-            }
-        }
-        /* JS-скрипт для обработки запроса с формы (спасибо ChatGPT)*/
-        $(document).ready(function() {
-            $('#process-btn').click(function() {
-                var text = $('#text').val();
-                $.ajax({
-                    url: '/process_text',
-                    type: 'POST',
-                    data: {'text': text},
-                    success: function(response) {
-                        $('#result').html(response.result);
-                        
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
+<body>
+    <form>
+        <div class = "main_div">
+            <h2> Choose a Magic Number Option: </h2>
+            <button formaction="/number1" class="bntFunc" style="margin-top: 15%">"I pick a number, and you guess."</button>
+            <br>
+            <button formaction="/number2" class="bntFunc" style="margin-top: 5%">You pick a number, and I guess.</button>
+        </div>
+    </form>
 </body>
+
 </html>

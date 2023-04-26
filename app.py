@@ -13,7 +13,18 @@ def index():
     resetNumber() # при обновлении страницы сбрасываем все счетчики и перегенерируем число
     return render_template('index.html', attempt=len(attempt)) # загружаем страницу HTML
 
-@app.route('/process_text', methods=['POST'])  # декоратор для обработки POST-запроса с введеным числом
+@app.route('/number1')
+def number1():
+    resetNumber() # при обновлении страницы сбрасываем все счетчики и перегенерируем число
+    return render_template('number1.html', attempt=len(attempt)) # загружаем страницу HTML
+
+@app.route('/process_number1', methods=['POST'])  # декоратор для обработки POST-запроса с введеным числом
+def process_text():
+    text = request.form['text'] # получаем из поля "text" значение 
+    result = youwish(int(text)) # передаем его в функцию для обработки и ждем результат которыей будет присвоен перененной result
+    return jsonify({'result': result}) # возвращаем на форму полученные данные 
+
+app.route('/process_number2', methods=['POST'])  # декоратор для обработки POST-запроса с введеным числом
 def process_text():
     text = request.form['text'] # получаем из поля "text" значение 
     result = youwish(int(text)) # передаем его в функцию для обработки и ждем результат которыей будет присвоен перененной result
