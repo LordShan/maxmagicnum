@@ -3,33 +3,38 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Text Processing</title>
+    <title>Magic Number bt Max. My turn</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <h1>Text Processing</h1>
-    <label for="text">Enter text:</label>
-    <input type="text" id="text" name="text">
-    <div>
-        <button class id="process-btnUP">Process</button>
-        <button id="process-btnDN">Process</button>
-        <button id="process-btnEQ">Process</button>
+    <div class="main_div">
+        <h1>Think of a number between <br /> 1 and 100.</h1>
+        <h1 class="result" id="number">My variant {{ gener_value }}</h1>
+        <button class="bntFunc" name="action" id="more" data-action="more"style="margin-top: 5%"> >More </button>
+        <button class="bntFunc" name="action" id="less" data-action="less" >Less< </button><br>
+        <button class="bntFunc" name="action" id="equals" data-action="equals" style="margin-top: 3%"> =Equals=</button>
+        <br><br><br><br><br>
+        <a href="/" >to home...</a>
     </div>
-    <div id="result"></div>
+    
     <script>
-        $(document).ready(function () {
-            $('#process-btn').click(function () {
-                var text = $('#text').val();
+        $(document).ready(function() {
+            var number = 0;
+        
+            // обработчик нажатия на кнопки
+            $('.bntFunc').on('click', function() {
+                var action = $(this).data('action');
                 $.ajax({
-                    url: '/process_text',
                     type: 'POST',
-                    data: { 'text': text },
-                    success: function (response) {
-                        $('#result').html(response.result);
+                    url: '/iPick',
+                    data: {
+                        action: action
                     },
-                    error: function (error) {
-                        console.log(error);
+                    success: function(data) {
+                        number = data.result;
+                        $('#number').text(number);
                     }
                 });
             });
