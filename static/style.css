@@ -61,3 +61,14 @@ label{
     /*white-space: nowrap;  для запрета переноса строк */
     word-wrap: break-word; /* для автоматического переноса слов */
     color: #44a02d;}
+
+.about{
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+.logo{
+    right: 0;
+    bottom: 2%;
+    position:fixed;
+}
